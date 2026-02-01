@@ -216,7 +216,7 @@ class GameWidgets:
             self.showPauseWidgets()
     
     def showGameResultWidgetsIfGameEnded(self):
-        if self.gameLogic.gameResult != gameDefs.GameResult.PLAYING.value:
+        if self.gameLogic.gameResult != gameDefs.GameResult.PLAYING.value and self.gameLogic.scene == gameDefs.Scene.GAME.value:
             self.showGameResultWidgets()
         else:
             self.hideGameResultWidgets()

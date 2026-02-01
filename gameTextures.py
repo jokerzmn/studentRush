@@ -10,11 +10,12 @@ class Texture(enum.Enum):
     PLAYER3_HEAD = 6
     PLAYER4_HEAD = 7
     TASK = 8
-    WATTER_BOTTLE = 9
+    WATER_BOTTLE = 9
     INVENTORY_SLOT = 10
     RETURN_TASK = 11
     GAME_AREA = 12
     DESK = 13
+    PLAYER_MARKER = 14
     
 texturePaths = [
     "res/pngs/player1.png",
@@ -30,7 +31,8 @@ texturePaths = [
     "res/pngs/inventorySlot.png",
     "res/pngs/returnTask.png",
     "res/pngs/gameArea.png",
-    "res/pngs/desk.png"
+    "res/pngs/desk.png",
+    "res/pngs/playerMarker.png"
 ]
 
 textureScales = [
@@ -47,7 +49,8 @@ textureScales = [
     (100, 100),
     (80, 160),
     (1400, 600),
-    (128, 128)
+    (128, 128),
+    (32, 32)
 ]
     
 class GameTextures:

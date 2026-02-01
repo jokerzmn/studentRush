@@ -130,9 +130,9 @@ class GameDraw:
                 self.textures[gameTextures.Texture.TASK.value],
                 (slotX[0] + 2, self.windowHeight - self.textures[gameTextures.Texture.INVENTORY_SLOT.value].get_height() - 18)
             )
-        elif self.gameLogic.inventory[gameDefs.InventorySlot.SLOT1.value] == gameDefs.InventoryItem.WATTER_BOTTLE.value:
+        elif self.gameLogic.inventory[gameDefs.InventorySlot.SLOT1.value] == gameDefs.InventoryItem.WATER_BOTTLE.value:
             self.screen.blit(
-                self.textures[gameTextures.Texture.WATTER_BOTTLE.value],
+                self.textures[gameTextures.Texture.WATER_BOTTLE.value],
                 (slotX[0] + 2, self.windowHeight - self.textures[gameTextures.Texture.INVENTORY_SLOT.value].get_height() - 22)
             )
             
@@ -141,9 +141,9 @@ class GameDraw:
                 self.textures[gameTextures.Texture.TASK.value],
                 (slotX[1] + 2, self.windowHeight - self.textures[gameTextures.Texture.INVENTORY_SLOT.value].get_height() - 18)
             )
-        elif self.gameLogic.inventory[gameDefs.InventorySlot.SLOT2.value] == gameDefs.InventoryItem.WATTER_BOTTLE.value:
+        elif self.gameLogic.inventory[gameDefs.InventorySlot.SLOT2.value] == gameDefs.InventoryItem.WATER_BOTTLE.value:
             self.screen.blit(
-                self.textures[gameTextures.Texture.WATTER_BOTTLE.value],
+                self.textures[gameTextures.Texture.WATER_BOTTLE.value],
                 (slotX[1] + 2, self.windowHeight - self.textures[gameTextures.Texture.INVENTORY_SLOT.value].get_height() - 22)
             )
             
@@ -186,7 +186,7 @@ class GameDraw:
         )
         
     def drawGameResult(self):
-       self.screen.blit(
+        self.screen.blit(
             self.gameTexts.gameResultText[gameTexts.TextProp.TEXT_OBJ.value],
             (self.gameTexts.gameResultText[gameTexts.TextProp.POS_X.value], self.gameTexts.gameResultText[gameTexts.TextProp.POS_Y.value])
         ) 
@@ -228,19 +228,18 @@ class GameDraw:
             ) 
             self.textures[gameTextures.Texture.TASK.value] = pg.transform.scale(self.textures[gameTextures.Texture.TASK.value], (96, 96))
             
-        elif itemOnTop == gameDefs.InventoryItem.WATTER_BOTTLE.value:
-            self.textures[gameTextures.Texture.WATTER_BOTTLE.value] = pg.transform.scale(self.textures[gameTextures.Texture.WATTER_BOTTLE.value], (80, 80))
+        elif itemOnTop == gameDefs.InventoryItem.WATER_BOTTLE.value:
+            self.textures[gameTextures.Texture.WATER_BOTTLE.value] = pg.transform.scale(self.textures[gameTextures.Texture.WATER_BOTTLE.value], (80, 80))
             self.screen.blit(
-                self.textures[gameTextures.Texture.WATTER_BOTTLE.value],
+                self.textures[gameTextures.Texture.WATER_BOTTLE.value],
                 (x + 25, y + 10)
             ) 
-            self.textures[gameTextures.Texture.WATTER_BOTTLE.value] = pg.transform.scale(self.textures[gameTextures.Texture.WATTER_BOTTLE.value], (96, 96))
+            self.textures[gameTextures.Texture.WATER_BOTTLE.value] = pg.transform.scale(self.textures[gameTextures.Texture.WATER_BOTTLE.value], (96, 96))
     
     def drawDesks(self):
         # Example of drawing desks with items on top of it
-        self.drawDesk(400, 400, gameDefs.InventoryItem.TASK.value)
-        self.drawDesk(800, 600, gameDefs.InventoryItem.WATTER_BOTTLE.value)
-        self.drawDesk(600, 200, gameDefs.InventoryItem.EMPTY.value)
+        for desk in self.gameLogic.desks:
+            self.drawDesk(desk[0], desk[1], desk[2])
     
     def drawPlayers(self):
         self.screen.blit(
@@ -262,4 +261,11 @@ class GameDraw:
                 self.textures[gameTextures.Texture.PLAYER4.value],
                 self.gameLogic.playersPos[gameDefs.PlayerPos.PLAYER4.value]
             )
+    
+    def drawPlayerMarker(self):
+        self.screen.blit(
+            self.textures[gameTextures.Texture.PLAYER_MARKER.value],
+            [self.gameLogic.playersPos[self.gameLogic.playerID][0] + 32,
+            self.gameLogic.playersPos[self.gameLogic.playerID][1] - 30]
+        )
     

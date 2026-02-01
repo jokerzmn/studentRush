@@ -10,6 +10,7 @@ import gameAudio
 import gameWidgets
 import gameWidgetsLogic
 import gameDraw
+import gameNetworking
 
 class StudentRush:
     def __init__(self, fpsCap, windowWidth, windowHeight):
@@ -24,12 +25,15 @@ class StudentRush:
         self.initPygame()
         
         self.gTextures = gameTextures.GameTextures(pg)
-        self.gLogic = gameLogic.GameLogic()
+        self.gAudio = gameAudio.GameAudio()
+        self.gLogic = gameLogic.GameLogic(self.gAudio)
         self.gTexts = gameTexts.GameTexts(pg, self.gLogic, self.windowWidth, self.windowHeight)
 
-        self.gAudio = gameAudio.GameAudio()
-        self.gWidgetsLogic = gameWidgetsLogic.GameWidgetsLogic(self.gLogic, self.gAudio)
+        self.gNetworking = gameNetworking.GameNetworking(self.gLogic)
+        self.gLogic.gameNetworking = self.gNetworking
+        self.gWidgetsLogic = gameWidgetsLogic.GameWidgetsLogic(self.gLogic, self.gAudio, self.gNetworking)
         self.gWidgets = gameWidgets.GameWidgets(self.gWidgetsLogic, pg, self.gLogic, self.gTexts, self.windowWidth, self.windowHeight, self.screen)
+        self.gNetworking.gameWidgets = self.gWidgets
         self.gDraw = gameDraw.GameDraw(self.gLogic, self.gTextures, self.gTexts, self.windowWidth, self.windowHeight, self.screen)
     
     def initPygame(self):
@@ -41,12 +45,23 @@ class StudentRush:
     def handleEvents(self, events):
         for event in events:
             if event.type == pg.QUIT:
+                self.gNetworking.disconnect()
                 self.gLogic.run = False
             elif event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     if self.gLogic.scene == gameDefs.Scene.GAME.value and self.gLogic.gameResult == gameDefs.GameResult.PLAYING.value:
                         self.gLogic.paused = not self.gLogic.paused
-    
+                        
+        keys = pg.key.get_pressed()
+        if keys[pg.K_a] and self.gLogic.playersPos[self.gLogic.playerID][0] > 90:
+            self.gLogic.playersPos[self.gLogic.playerID][0] -= 6
+        if keys[pg.K_d] and self.gLogic.playersPos[self.gLogic.playerID][0] < 1420:
+            self.gLogic.playersPos[self.gLogic.playerID][0] += 6
+        if keys[pg.K_w] and self.gLogic.playersPos[self.gLogic.playerID][1] > 170:
+            self.gLogic.playersPos[self.gLogic.playerID][1] -= 6
+        if keys[pg.K_s] and self.gLogic.playersPos[self.gLogic.playerID][1] < 650:
+            self.gLogic.playersPos[self.gLogic.playerID][1] += 6
+                
     def loop(self):
         self.screen.fill((60, 60, 60))
         
@@ -82,12 +97,15 @@ class StudentRush:
                 self.gDraw.drawInventory()
                 
                 self.gDraw.drawPlayers()
+                self.gDraw.drawPlayerMarker()
                 
                 self.gDraw.drawTextGroup(self.gTexts.gameMapTexts)
                 self.gWidgets.showGameMapWidgets()
                 
                 self.gDraw.drawReturnTaskIfActive()
                 self.gDraw.drawTimer()
+                
+                self.gLogic.loop()
                 
                 if self.gLogic.getRemainingTime() <= 0:
                     self.gLogic.endGame()

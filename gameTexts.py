@@ -64,13 +64,13 @@ class GameTexts:
         self.mainMenuTexts[MainMenuText.TITLE.value][TextProp.POS_Y.value] = 100
         
         self.joinGameMenuTexts.append([
-            self.bigFont.render('Wpisz adres IP hosta', False, (255, 255, 255)),
+            self.bigFont.render('Wpisz adres IP serwera', False, (255, 255, 255)),
             None, None
         ])
         self.joinGameMenuTexts[JoinGameMenuText.TEXTBOX_IP.value][TextProp.POS_X.value] = self.windowWidth/2 - self.joinGameMenuTexts[JoinGameMenuText.TEXTBOX_IP.value][TextProp.TEXT_OBJ.value].get_width()/2
         self.joinGameMenuTexts[JoinGameMenuText.TEXTBOX_IP.value][TextProp.POS_Y.value] = 100
         
-        self.joinErrorText[TextProp.TEXT_OBJ.value] = self.smallFont.render('Nie udalo sie polaczyc z hostem', False, (255, 255, 255))
+        self.joinErrorText[TextProp.TEXT_OBJ.value] = self.smallFont.render('Nie udalo sie polaczyc z serwerem', False, (255, 255, 255))
         self.joinErrorText[TextProp.POS_X.value] = self.windowWidth/2 - self.joinErrorText[0].get_width()/2
         self.joinErrorText[TextProp.POS_Y.value] = self.joinGameMenuTexts[JoinGameMenuText.TEXTBOX_IP.value][TextProp.POS_Y.value] + 100
         

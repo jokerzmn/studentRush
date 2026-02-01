@@ -31,7 +31,7 @@ class PlayerPos(enum.Enum):
 class InventoryItem(enum.Enum):
     EMPTY = 0
     TASK = 1
-    WATTER_BOTTLE = 2
+    WATER_BOTTLE = 2
     
 class InventorySlot(enum.Enum):
     SLOT1 = 0
